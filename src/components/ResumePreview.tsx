@@ -13,18 +13,35 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
     return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
   };
 
+  const getFontClass = (font: string) => {
+    switch (font) {
+      case 'Times New Roman':
+      case 'Georgia':
+        return 'font-serif';
+      default:
+        return 'font-sans';
+    }
+  };
+
   const templates = {
     professional: 'bg-white',
-    modern: 'bg-gradient-to-br from-white to-blue-50',
-    executive: 'bg-white border-l-4 border-blue-900',
+    modern: 'bg-gradient-to-br from-white via-white to-blue-50',
+    executive: 'bg-white',
     minimal: 'bg-white',
+  };
+
+  const headerStyles = {
+    professional: 'border-b-2 border-gray-300',
+    modern: 'border-b-4 border-gradient-to-r from-blue-500 to-purple-500 bg-gradient-to-r from-blue-50 to-purple-50 -mx-12 -mt-12 px-12 pt-12',
+    executive: 'border-l-4 border-blue-900 pl-6 bg-gray-50 -mx-12 -mt-12 px-12 pt-12',
+    minimal: 'border-b border-gray-400',
   };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-8">
-      <div className={`max-w-4xl mx-auto ${templates[resumeData.template]} p-12 min-h-[1100px] shadow-xl`}>
+      <div className={`max-w-4xl mx-auto ${templates[resumeData.template]} ${getFontClass(resumeData.font)} p-12 min-h-[1100px] shadow-xl`}>
         {/* Header */}
-        <div className="border-b-2 border-gray-300 pb-6 mb-6">
+        <div className={`${headerStyles[resumeData.template]} pb-6 mb-6`}>
           <h1 className="text-4xl mb-3">{resumeData.contact.fullName || 'Your Name'}</h1>
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-700">
             {resumeData.contact.email && (
