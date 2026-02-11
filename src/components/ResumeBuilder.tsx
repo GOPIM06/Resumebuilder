@@ -6,6 +6,7 @@ import { ActionVerbHelper } from './ActionVerbHelper';
 import { FontSelector } from './FontSelector';
 import { ATSScoreChecker } from './ATSScoreChecker';
 import { ResumeTemplates } from './ResumeTemplates';
+import { DownloadModal } from './DownloadModal';
 import { Download, Eye, Edit, FileText, Lightbulb, Award, FileCheck } from 'lucide-react';
 
 export interface ResumeData {
@@ -72,6 +73,7 @@ export function ResumeBuilder() {
   const [showHelper, setShowHelper] = useState(false);
   const [showATSChecker, setShowATSChecker] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
 
   const updateResumeData = (updates: Partial<ResumeData>) => {
     setResumeData(prev => ({ ...prev, ...updates }));
@@ -231,7 +233,7 @@ export function ResumeBuilder() {
               </button>
               
               <button
-                onClick={handleDownload}
+                onClick={() => setShowDownloadModal(true)}
                 className="px-4 py-2 rounded-lg flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 transition-colors"
               >
                 <Download className="w-4 h-4" />
@@ -290,6 +292,14 @@ export function ResumeBuilder() {
         <ResumeTemplates
           onSelectTemplate={loadTemplate}
           onClose={() => setShowTemplates(false)}
+        />
+      )}
+      
+      {/* Download Modal */}
+      {showDownloadModal && (
+        <DownloadModal
+          resumeData={resumeData}
+          onClose={() => setShowDownloadModal(false)}
         />
       )}
     </div>
